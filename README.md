@@ -9,9 +9,10 @@
 - https://app.prntscr.com/ru/privacy.html 
 
 # Как его использовать (все в консоль)
-1. npm i
-2. node index.js
-3. Все :D
+1. git clone https://github.com/Xaliks/Lightshot-Checker/
+2. npm i
+3. node index.js
+4. Все :D
 
 # Конфиг (config.json)
 1. File - Файл, в который вам будут приходить изображения
