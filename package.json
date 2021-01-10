@@ -1,0 +1,16 @@
+{
+  "name": "prnt.sc_checker",
+  "version": "1.0.0",
+  "description": "Чекер, который берет рандомные изображения с сайта prnt.sc",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Xaliks",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.5",
+    "request": "^2.88.2"
+  }
+}
