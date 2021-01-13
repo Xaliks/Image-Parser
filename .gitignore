@@ -1,3 +1,5 @@
 node_modules
 *.log
+*.png
+*.jpg
 package-lock.json
