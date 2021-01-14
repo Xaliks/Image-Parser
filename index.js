@@ -21,20 +21,25 @@ setInterval(() => {
     };
 
     request(options, function(error, _response, responseBody) {
-        if(responseBody === 'error code: 1006') throw new Error('Ваш IP был забанен в LightShot! Попробуйте перезагрузить ваш роутер!')
+        if(responseBody === 'error code: 1006') 
+            throw new Error('Ваш IP был забанен в LightShot! Попробуйте перезагрузить ваш роутер!')
+
         const $ = cheerio.load(responseBody);
         const img = $('img').attr('src');
         if(
-            String(img) === "//st.prntscr.com/2020/12/09/2233/img/0_173a7b_211be8ff.png" ||
-            String(img) === "//st.prntscr.com/2020/12/09/2233/img/footer-logo.png"
+            img === "//st.prntscr.com/2020/12/09/2233/img/0_173a7b_211be8ff.png" ||
+            img === "//st.prntscr.com/2020/12/09/2233/img/footer-logo.png"
         ) return console.log('[-]'.red + ' Не найдено');
-        if(!String(img).startsWith('https://i.imgur.com/')) return console.log('[-]'.red + ' Не с сервера imgur');
+        if(!img.startsWith('https://i.imgur.com/')) return console.log('[-]'.red + ' Не с сервера imgur');
 
-        fs.appendFile(file, img + '\n')
+        fs.appendFile(file, img + '\n', function(err) {
+            if(err) return;
+        });
 
-        console.log('[+] '.green + img)
+        console.log('[+] '.green + img);
 
-        if(files) download(img, `./images/${img.slice("https://i.imgur.com/".length)}`)
+        if(files) 
+            download(img, `./images/${img.slice("https://i.imgur.com/".length)}`);
     });
 }, speed)
 
@@ -51,4 +56,4 @@ function random(length) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
-}
+};

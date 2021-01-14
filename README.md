@@ -10,7 +10,8 @@
 
 # Как его использовать (все в консоль)
 Нужен Node!
-1. git clone https://github.com/Xaliks/Lightshot-Checker/
+(Желательно git)
+(если есть git) 1. git clone https://github.com/Xaliks/Lightshot-Checker/
 2. cd Lightshot-Checker
 3. npm i
 4. node index.js
