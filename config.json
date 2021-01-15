@@ -1,6 +1,16 @@
 {
-    "file": "file.log",
-    "speed": "1000",
-    "characters": "abcdefghijklmnopqrstuvwxyz1234567890",
-    "files": true
+    "lightshot": {
+        "enable": true,
+        "file": "lightshot.log",
+        "speed": "1000",
+        "characters": "abcdefghijklmnopqrstuvwxyz1234567890",
+        "files": true
+    },
+    "imgur": {
+        "enable": true,
+        "file": "imgur.log",
+        "speed": "1000",
+        "characters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        "files": true
+    }
 }

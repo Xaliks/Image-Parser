@@ -3,15 +3,15 @@
 Автор не несет ответственности за ваши действия с полученными изображениями.
 Все предоставлено в учебном виде.
 Программа получает изображения путём случайного подбора символов.
-Используется сайт [LightShot'а](https://prnt.sc/)
 
 # ОБЯЗАТЕЛЬНО К ПРОЧТЕНИЮ!
-- https://app.prntscr.com/ru/privacy.html 
+- https://app.prntscr.com/ru/privacy.html
+- https://imgur.com/privacy
 
 # Как его использовать (все в консоль)
 Нужен Node!
 (Желательно git)
-(если есть git) 1. git clone https://github.com/Xaliks/Lightshot-Checker/
+1. git clone https://github.com/Xaliks/Lightshot-Checker/ или просто скачайте zip.
 2. cd Lightshot-Checker
 3. npm i
 4. node index.js

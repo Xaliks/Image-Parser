@@ -1,7 +1,7 @@
 {
-  "name": "prnt.sc_checker",
+  "name": "image_parser",
   "version": "1.1.0",
-  "description": "Чекер, который берет рандомные изображения с сайта prnt.sc",
+  "description": "Чекер, который берет рандомные изображения с сайта prnt.sc и/или imgur",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
