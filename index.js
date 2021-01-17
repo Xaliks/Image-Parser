@@ -7,5 +7,5 @@ for(conf in cfg) {
         throw new TypeError(`[${conf}] Enable Должно быть true или false`)
     }
 
-    if(p.enable) require('./sites/' + conf)(p)
+    if(p.enable) require(`./sites/${conf}.js`)(p)
 }

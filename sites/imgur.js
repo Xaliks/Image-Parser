@@ -32,7 +32,7 @@ module.exports = (imgur) => {
 
             });
 
-            if(files) download(link, `./imgur${response.request.path}`);
+            if(files) download(link, `./Imgur${response.request.path}`);
         })
     }, speed);
 }

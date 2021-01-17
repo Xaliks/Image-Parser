@@ -37,9 +37,11 @@ module.exports = (lightshot) => {
                 url: img
             }, function(error, response, body) {
 
+                if(response.request.href) {
                 if(
                     String(response.request.href) === 'https://i.imgur.com/removed.png'
                 ) return console.log(`${'[LightShot]'.yellow} ${"[-]".red} Не найдено`);
+                }
 
                 if(!img.startsWith('https://i.imgur.com/')) {
                     return console.log(`${'[LightShot]'.yellow} ${"[-]".red} Не с сервера Imgur`);
@@ -51,7 +53,7 @@ module.exports = (lightshot) => {
 
                 });
 
-                if(files) download(img, `./lightshot/${img.slice("https://i.imgur.com/".length)}`);
+                if(files) download(img, `./LightShot/${img.slice("https://i.imgur.com/".length)}`);
             })
         });
     }, speed);

@@ -32,7 +32,7 @@ module.exports = (yapx) => {
 
             fs.appendFile(file, img + '\n', function(err) {});
 
-            if(files) download(img, `./yapx${response.request.path.slice(2)}.png`);
+            if(files) download(img, `./Yapx${response.request.path.slice(2)}.png`);
         });
     }, speed);
 }
