@@ -24,9 +24,9 @@ module.exports = (imgur) => {
                 String(response.headers['content-type']) === "text/html" ||
                 String(response.request.href) === 'https://i.imgur.com/removed.png' ||
                 !String(response.request.href).endsWith('.png')
-            ) return console.log(`[Imgur]     ${"[-]".red} Не найдено`);
+            ) return console.log(`${'[Imgur]'.yellow}     ${"[-]".red} Не найдено`);
 
-            console.log(`[Imgur]     ${"[+]".green} ${link}`);
+            console.log(`${'[Imgur]'.yellow}     ${"[+]".green} ${link}`);
 
             fs.appendFile(file, link + '\n', function(err) {
 

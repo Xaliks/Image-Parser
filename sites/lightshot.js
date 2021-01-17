@@ -31,18 +31,28 @@ module.exports = (lightshot) => {
             if(
                 img === "//st.prntscr.com/2020/12/09/2233/img/0_173a7b_211be8ff.png" ||
                 img === "//st.prntscr.com/2020/12/09/2233/img/footer-logo.png"
-            ) return console.log(`[LightShot] ${"[-]".red} Не найдено`);
-            if(!img.startsWith('https://i.imgur.com/')) {
-                return console.log(`[LightShot] ${"[-]".red} Не с сервера Imgur`);
-            }
+            ) return console.log(`${'[LightShot]'.yellow} ${"[-]".red} Не найдено`);
 
-            fs.appendFile(file, img + '\n', function(err) {
-                if(err) return;
-            });
+            request({
+                url: img
+            }, function(error, response, body) {
 
-            console.log(`[LightShot] ${"[+]".green} ${img}`);
+                if(
+                    String(response.request.href) === 'https://i.imgur.com/removed.png'
+                ) return console.log(`${'[LightShot]'.yellow} ${"[-]".red} Не найдено`);
 
-            if(files) download(img, `./lightshot/${img.slice("https://i.imgur.com/".length)}`);
+                if(!img.startsWith('https://i.imgur.com/')) {
+                    return console.log(`${'[LightShot]'.yellow} ${"[-]".red} Не с сервера Imgur`);
+                }
+
+                console.log(`${'[LightShot]'.yellow} ${"[+]".green} ${img}`);
+
+                fs.appendFile(file, img + '\n', function(err) {
+
+                });
+
+                if(files) download(img, `./lightshot/${img.slice("https://i.imgur.com/".length)}`);
+            })
         });
     }, speed);
 }
