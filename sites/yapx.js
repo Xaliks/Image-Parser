@@ -11,38 +11,52 @@ module.exports = (yapx) => {
         characters
     } = yapx
     setInterval(() => {
-        const options = {
-            url: "https://yapx.ru/v/" + random(5, characters),
-            method: "GET",
-            headers: {
-                Accept: "text/html",
-                "User-Agent": "Chrome",
-            },
-        };
+        request({
+            url: "https://yapx.ru/v/" + random(5, characters)
+        }, function(error, response, body) {
+            if(
+                !response ||
+                !body
+            ) return;
 
-        request(options, function(error, response, body) {
             const $ = cheerio.load(body);
             const img = $('div img').attr('src')
 
             if(
+                !img ||
+                img === null ||
                 String(img) === "//i.yapx.ru/404.gif"
             ) return console.log(`${'[Yapx]'.yellow}      ${"[-]".red} Не найдено`);
 
             console.log(`${'[Yapx]'.yellow}      ${"[+]".green} ${img}`);
 
-            fs.appendFile(file, img + '\n', function(err) {});
+            if(file) {
+                fs.appendFile(file, img + '\n', function(err) {});
+            };
 
-            if(files) download(img, `./Yapx${response.request.path.slice(2)}.png`);
+            if(files) {
+                download(img, `./yapx${response.request.path.slice(2)}.png`);
+            };
         });
     }, speed);
 }
 
-function download(uri, filename) {
-    request.head(uri, function() {
-        request(uri).pipe(fs.createWriteStream(filename));
+
+/**
+ * @param {String} url URL изображения
+ * @param {String} filename Имя файла
+ */
+function download(url, filename) {
+    request.head(url, function() {
+        request(url).pipe(fs.createWriteStream(filename));
     });
 };
 
+/**
+ * @param {Number} length Длина рандомных символов
+ * @param {String} characters Символы
+ * @return {String} Рандомные символы
+ */
 function random(length, characters) {
     let result = '';
     for(let i = 0; i < length; i++) {

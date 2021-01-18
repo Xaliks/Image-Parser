@@ -11,35 +11,42 @@ module.exports = (imgur) => {
     } = imgur
     setInterval(() => {
         const options = {
-            url: "https://i.imgur.com/" + random(5, 6, characters),
-            method: "GET",
-            headers: {
-                Accept: "text/html",
-                "User-Agent": "Chrome",
-            },
+            url: "https://i.imgur.com/" + random(5, 6, characters)
         };
-        const link = options.url
+        const {
+            url: link
+        } = options
         request(options, function(error, response, body) {
             if(
+                !response ||
+                !response.headers ||
+                !response.request.href ||
                 String(response.headers['content-type']) === "text/html" ||
-                String(response.request.href) === 'https://i.imgur.com/removed.png' ||
-                !String(response.request.href).endsWith('.png')
+                String(response.request.href) === 'https://i.imgur.com/removed.png'
             ) return console.log(`${'[Imgur]'.yellow}     ${"[-]".red} Не найдено`);
 
             console.log(`${'[Imgur]'.yellow}     ${"[+]".green} ${link}`);
 
-            fs.appendFile(file, link + '\n', function(err) {
+            if(file) {
+                fs.appendFile(file, link + '\n', function(err) {});
+            }
 
-            });
-
-            if(files) download(link, `./Imgur${response.request.path}`);
+            if(files) {
+                download(link, `./imgur${response.request.path}`);
+            }
         })
     }, speed);
 }
 
+/**
+ * @param {Number} min Минимальное кол-во символов 
+ * @param {Number} max Максимальное кол-во символов
+ * @param {String} characters Символы
+ */
 function random(min, max, characters) {
     let result = '';
-    for(let i = 0; i < getRandomInRange(min, max); i++) {
+    let random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    for(let i = 0; i < random(min, max); i++) {
         result += characters.charAt(
             Math.floor(
                 Math.random() * characters.length
@@ -49,12 +56,12 @@ function random(min, max, characters) {
     return result + ".png";
 }
 
-function getRandomInRange(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function download(uri, filename) {
-    request.head(uri, function() {
-        request(uri).pipe(fs.createWriteStream(filename));
+/**
+ * @param {String} url URL изображения
+ * @param {String} filename Имя файла
+ */
+function download(url, filename) {
+    request.head(url, function() {
+        request(url).pipe(fs.createWriteStream(filename));
     });
 };

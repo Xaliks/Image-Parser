@@ -1,22 +1,22 @@
 {
-    "LightShot": {
+    "lightshot": {
         "enable": true,
-        "file": "lightshot.log",
-        "speed": "750",
+        "file": false,
+        "speed": 750,
         "characters": "abcdefghijklmnopqrstuvwxyz1234567890",
         "files": true
     },
-    "Imgur": {
+    "imgur": {
         "enable": true,
-        "file": "imgur.log",
-        "speed": "750",
+        "file": false,
+        "speed": 300,
         "characters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
         "files": true
     },
-    "Yapx": {
+    "yapx": {
         "enable": true,
-        "file": "yapx.log",
-        "speed": "750",
+        "file": false,
+        "speed": 300,
         "characters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
         "files": true
     }
