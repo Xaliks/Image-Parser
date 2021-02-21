@@ -25,6 +25,11 @@ _             __  __        _  _  _
        |___/                                
 `.brightCyan)
 
+console.log(`${"[+]".green} - ${"успешно".bgGray}
+${"[+]".yellow} - ${"Уже было найдено".bgGray}
+${"[-]".red} - ${"Не найдено".bgGray}
+`)
+
 for(conf in cfg) {
     let p = cfg[conf]
 
@@ -32,14 +37,8 @@ for(conf in cfg) {
         throw new TypeError(`[${conf}] [Enable] Должно быть true или false`)
     }
 
-    if(typeof p.file != 'string') {
-        if(typeof p.file != 'boolean') {
-            throw new TypeError(`[${conf}] [File] Должно быть строкой или false!`)
-        }
-    }
-
-    if(typeof p.speed != 'number') {
-        throw new TypeError(`[${conf}] [Speed] Должно быть числом (без "")!`)
+    if(!Number(p.speed)) {
+        throw new TypeError(`[${conf}] [Speed] Должно быть числом!`)
     }
 
     if(p.enable) require(`./sites/${conf}.js`)(p)

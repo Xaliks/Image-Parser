@@ -2,6 +2,11 @@ const cheerio = require("cheerio");
 const request = require("request");
 const fs = require('fs');
 require('colors');
+const random = require('../scripts/random')
+const download = require('../scripts/download')
+const Json = require('../scripts/jsonArray')
+const toJson = new Json('./found_links.json')
+const bad = ["//st.prntscr.com/2021/02/09/0221/img/0_173a7b_211be8ff.png", "//st.prntscr.com/2021/02/09/0221/img/footer-logo.png", "https://i.imgur.com/removed.png"]
 
 module.exports = (lightshot) => {
     const {
@@ -12,76 +17,36 @@ module.exports = (lightshot) => {
     } = lightshot
     if(speed < 750) throw new Error('Не устанавливайте скорость ниже 750! иначе ваш IP забанят!');
     setInterval(() => {
-        request({
-            url: "https://prnt.sc/" + random(5, characters)
-        }, function(error, response, body) {
-            if(
-                !response ||
-                !body
-            ) return;
-
-            if(body === 'error code: 1006')
-                throw new Error('Ваш IP был забанен в LightShot! Попробуйте перезагрузить ваш роутер!');
-
+        const options = {
+            url: "https://prnt.sc/" + random(5, 5, characters),
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.97 Safari/537.36 Vivaldi/1.94.1008.34'
+            }
+        }
+        const {
+            url: link
+        } = options
+        request(options, (error, response, body) => {
             const $ = cheerio.load(body);
             const img = $('img').attr('src');
 
             if(
-                !img ||
-                img === null ||
-                img === "//st.prntscr.com/2020/12/09/2233/img/0_173a7b_211be8ff.png" ||
-                img === "//st.prntscr.com/2020/12/09/2233/img/footer-logo.png"
-            ) return console.log(`${'[LightShot]'.yellow} ${"[-]".red} Не найдено`);
+                bad.includes(img)
+            ) return console.log(`${'[LightShot]'.gray} ${"[-]".red} ${link}`);
 
-            request({
-                url: img
-            }, function(error, response, body) {
-                if(
-                    !response ||
-                    !response.request.href ||
-                    String(response.request.href) === 'https://i.imgur.com/removed.png'
-                ) return console.log(`${'[LightShot]'.yellow} ${"[-]".red} Не найдено`);
+            if(!toJson.lightshot) toJson.lightshot = []
+            if(!toJson.lightshot.includes(link)) {
+                toJson.lightshot.push(link)
+                toJson.save()
+            } else {
+                return console.log(`${'[LightShot]'.gray} ${"[+]".yellow} ${link}`);
+            }
 
-                if(!img.startsWith('https://i.imgur.com/')) {
-                    return console.log(`${'[LightShot]'.yellow} ${"[-]".red} Не с сервера Imgur`);
-                }
+            console.log(`${'[LightShot]'.gray} ${"[+]".green} ${link}`);
 
-                console.log(`${'[LightShot]'.yellow} ${"[+]".green} ${img}`);
-
-                if(file) {
-                    fs.appendFile(file, img + '\n', function(err) {});
-                };
-
-                if(files) {
-                    download(img, `./lightshot/${img.slice("https://i.imgur.com/".length)}`);
-                };
-            })
+            if(files) {
+                download(img, `./images/lightshot/${link.slice("https://prnt.sc/".length)}.png`);
+            };
         });
     }, speed);
-}
-
-/**
- * @param {String} url URL изображения
- * @param {String} filename Имя файла
- */
-function download(url, filename) {
-    request.head(url, function() {
-        request(url).pipe(fs.createWriteStream(filename));
-    });
-};
-
-/**
- * @param {Number} length Длина рандомных символов
- * @param {String} characters Символы
- */
-function random(length, characters) {
-    let result = '';
-    for(let i = 0; i < length; i++) {
-        result += characters.charAt(
-            Math.floor(
-                Math.random() * characters.length
-            )
-        );
-    }
-    return result;
 }

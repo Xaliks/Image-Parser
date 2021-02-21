@@ -1,6 +1,10 @@
 const request = require("request");
 const fs = require('fs');
 require('colors');
+const random = require('../scripts/random')
+const download = require('../scripts/download')
+const Json = require('../scripts/jsonArray')
+const toJson = new Json('./found_links.json')
 
 module.exports = (imgur) => {
     const {
@@ -11,57 +15,30 @@ module.exports = (imgur) => {
     } = imgur
     setInterval(() => {
         const options = {
-            url: "https://i.imgur.com/" + random(5, 6, characters)
+            url: "https://i.imgur.com/" + random(5, 6, characters) + ".png"
         };
         const {
             url: link
         } = options
-        request(options, function(error, response, body) {
+        request(options, (error, response, body) => {
             if(
-                !response ||
-                !response.headers ||
-                !response.request.href ||
                 String(response.headers['content-type']) === "text/html" ||
                 String(response.request.href) === 'https://i.imgur.com/removed.png'
-            ) return console.log(`${'[Imgur]'.yellow}     ${"[-]".red} Не найдено`);
+            ) return console.log(`${'[Imgur]'.gray}     ${"[-]".red} ${link}`);
 
-            console.log(`${'[Imgur]'.yellow}     ${"[+]".green} ${link}`);
-
-            if(file) {
-                fs.appendFile(file, link + '\n', function(err) {});
+            if(!toJson.imgur) toJson.imgur = []
+            if(!toJson.imgur.includes(link)) {
+                toJson.imgur.push(link)
+                toJson.save()
+            } else {
+                return console.log(`${'[Imgur]'.gray}     ${"[+]".yellow} ${link}`);
             }
 
+            console.log(`${'[Imgur]'.gray}     ${"[+]".green} ${link}`);
+
             if(files) {
-                download(link, `./imgur${response.request.path}`);
+                download(link, `./images/imgur/${response.request.href.slice("https://i.imgur.com".length)}`);
             }
         })
     }, speed);
 }
-
-/**
- * @param {Number} min Минимальное кол-во символов 
- * @param {Number} max Максимальное кол-во символов
- * @param {String} characters Символы
- */
-function random(min, max, characters) {
-    let result = '';
-    let random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-    for(let i = 0; i < random(min, max); i++) {
-        result += characters.charAt(
-            Math.floor(
-                Math.random() * characters.length
-            )
-        );
-    }
-    return result + ".png";
-}
-
-/**
- * @param {String} url URL изображения
- * @param {String} filename Имя файла
- */
-function download(url, filename) {
-    request.head(url, function() {
-        request(url).pipe(fs.createWriteStream(filename));
-    });
-};
