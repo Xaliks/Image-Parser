@@ -21,6 +21,7 @@ module.exports = (imgur) => {
         } = options
         request(options, (error, response, body) => {
             if (
+                String(response.headers['content-type']) === "text/html" ||
                 bad.includes(response.request.href)
             ) return console.log(`${'[Imgur]'.gray}      ${"[-]".red} ${link}`);
 

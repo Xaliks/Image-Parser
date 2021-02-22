@@ -6,10 +6,18 @@ const request = require('request')
  * @param {String} filename Имя файла
  */
 function download(url, filename) {
-    if (!filename.endsWith(".png")) return;
-    request.head(url, function() {
-        request(url).pipe(fs.createWriteStream(filename));
-    });
+    url = String(url)
+    filename = String(filename)
+    if (
+        filename.endsWith(".png") ||
+        url.endsWith(".png") ||
+        filename.endsWith(".jpg") ||
+        url.endsWith(".jpg")
+    ) {
+        request.head(url, function() {
+            request(url).pipe(fs.createWriteStream(filename));
+        });
+    }
 };
 
 module.exports = download

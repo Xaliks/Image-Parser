@@ -26,7 +26,7 @@ module.exports = (lightshot) => {
         } = options
         request(options, (error, response, body) => {
             const $ = cheerio.load(body);
-            const img = $('img[id="screenshot-image"]').attr('src');
+            const img = $('img').attr('src');
 
             request({
                 url: img
