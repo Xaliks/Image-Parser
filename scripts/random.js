@@ -6,7 +6,7 @@
 function random(min, max, characters) {
     this.result = '';
     let random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-    for(let i = 0; i < random(min, max); i++) {
+    for (let i = 0; i < random(min, max); i++) {
         this.result += characters.charAt(
             Math.floor(
                 Math.random() * characters.length

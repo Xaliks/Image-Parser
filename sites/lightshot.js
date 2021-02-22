@@ -1,6 +1,5 @@
 const cheerio = require("cheerio");
 const request = require("request");
-const fs = require('fs');
 require('colors');
 const random = require('../scripts/random')
 const download = require('../scripts/download')
@@ -11,11 +10,10 @@ const bad = ["//st.prntscr.com/2021/02/09/0221/img/0_173a7b_211be8ff.png", "//st
 module.exports = (lightshot) => {
     const {
         speed,
-        file,
         files,
         characters
     } = lightshot
-    if(speed < 750) throw new Error('Не устанавливайте скорость ниже 750! иначе ваш IP забанят!');
+    if (speed < 750) throw new Error('Не устанавливайте скорость ниже 750! иначе ваш IP забанят!');
     setInterval(() => {
         const options = {
             url: "https://prnt.sc/" + random(5, 5, characters),
@@ -30,21 +28,21 @@ module.exports = (lightshot) => {
             const $ = cheerio.load(body);
             const img = $('img').attr('src');
 
-            if(
+            if (
                 bad.includes(img)
-            ) return console.log(`${'[LightShot]'.gray} ${"[-]".red} ${link}`);
+            ) return console.log(`${'[LightShot]'.gray}  ${"[-]".red} ${link}`);
 
-            if(!toJson.lightshot) toJson.lightshot = []
-            if(!toJson.lightshot.includes(link)) {
+            if (!toJson.lightshot) toJson.lightshot = []
+            if (!toJson.lightshot.includes(link)) {
                 toJson.lightshot.push(link)
                 toJson.save()
             } else {
-                return console.log(`${'[LightShot]'.gray} ${"[+]".yellow} ${link}`);
+                return console.log(`${'[LightShot]'.gray}  ${"[+]".yellow} ${link}`);
             }
 
-            console.log(`${'[LightShot]'.gray} ${"[+]".green} ${link}`);
+            console.log(`${'[LightShot]'.gray}  ${"[+]".green} ${link}`);
 
-            if(files) {
+            if (files) {
                 download(img, `./images/lightshot/${link.slice("https://prnt.sc/".length)}.png`);
             };
         });
