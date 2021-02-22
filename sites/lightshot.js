@@ -26,25 +26,30 @@ module.exports = (lightshot) => {
         } = options
         request(options, (error, response, body) => {
             const $ = cheerio.load(body);
-            const img = $('img').attr('src');
+            const img = $('img[id="screenshot-image"]').attr('src');
 
-            if (
-                bad.includes(img)
-            ) return console.log(`${'[LightShot]'.gray}  ${"[-]".red} ${link}`);
+            request({
+                url: img
+            }, (err, res, bdy) => {
+                if (
+                    bad.includes(res ? res.request.href : undefined) ||
+                    bad.includes(img)
+                ) return console.log(`${'[LightShot]'.gray}  ${"[-]".red} ${link}`);
 
-            if (!toJson.lightshot) toJson.lightshot = []
-            if (!toJson.lightshot.includes(link)) {
-                toJson.lightshot.push(link)
-                toJson.save()
-            } else {
-                return console.log(`${'[LightShot]'.gray}  ${"[+]".yellow} ${link}`);
-            }
+                if (!toJson.lightshot) toJson.lightshot = []
+                if (!toJson.lightshot.includes(link)) {
+                    toJson.lightshot.push(link)
+                    toJson.save()
+                } else {
+                    return console.log(`${'[LightShot]'.gray}  ${"[+]".yellow} ${link}`);
+                }
 
-            console.log(`${'[LightShot]'.gray}  ${"[+]".green} ${link}`);
+                console.log(`${'[LightShot]'.gray}  ${"[+]".green} ${link}`);
 
-            if (files) {
-                download(img, `./images/lightshot/${link.slice("https://prnt.sc/".length)}.png`);
-            };
+                if (files) {
+                    download(img, `./images/lightshot/${link.slice("https://prnt.sc/".length)}.png`);
+                };
+            })
         });
     }, speed);
 }
