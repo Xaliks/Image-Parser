@@ -1,13 +1,13 @@
 {
     "lightshot": {
         "enable": true,
-        "speed": 750,
+        "speed": 559,
         "characters": "abcdefghijklmnopqrstuvwxyz1234567890",
         "files": true
     },
     "imgur": {
         "enable": true,
-        "speed": 300,
+        "speed": 600,
         "characters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
         "files": true
     }

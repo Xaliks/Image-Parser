@@ -13,7 +13,6 @@ module.exports = (lightshot) => {
         files,
         characters
     } = lightshot
-    if (speed < 750) throw new Error('Не устанавливайте скорость ниже 750! иначе ваш IP забанят!');
     setInterval(() => {
         const options = {
             url: "https://prnt.sc/" + random(5, 5, characters),
