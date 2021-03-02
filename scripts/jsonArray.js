@@ -11,8 +11,10 @@ class Json {
     }
 
     save() {
-        return fs.writeFileSync(this.#path, JSON.stringify(this, null, 2));
+        fs.writeFileSync(this.#path, JSON.stringify(this, null, 2));
     }
 }
 
-module.exports = Json
+const notFound = new Json('./not_found_links.json') // Да, я гений. Я тупо скопировал код класса
+
+module.exports = notFound
