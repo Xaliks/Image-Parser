@@ -6,6 +6,12 @@
 
 ## Как его использовать?
 Нужен [`NodeJS`](https://nodejs.org/ru/)!
+Необходимые модули:
+```
+npm install cheerio
+npm install colors
+npm install request
+```
 1. git clone https://github.com/Xaliks/Image-Parser/ или просто скачайте zip.
 2. Запускаем `start.bat`
 3. Все ^_^
