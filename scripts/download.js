@@ -5,7 +5,9 @@ const request = require('request')
  * @param {String} url URL изображения
  * @param {String} filename Имя файла
  */
-function download(url, filename) {
+module.exports = function download(url, filename) {
+    if (!url || !filename) return;
+    
     url = String(url)
     filename = String(filename)
     if (
@@ -19,5 +21,3 @@ function download(url, filename) {
         });
     }
 };
-
-module.exports = download

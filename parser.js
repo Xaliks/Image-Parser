@@ -1,5 +1,4 @@
 const cfg = require('./config.json')
-const notFound = require('./scripts/jsonArray');
 require('colors')
 
 
@@ -13,20 +12,16 @@ ${"[==>]".brightCyan.bold} ${"VK".blue.bold}: ${"https://vk.com/xaliksss".bold}
 
 ${"======================================================".brightCyan.bold}`)
 
-for(conf in cfg) {
-    if (!notFound[conf]) {
-        notFound[conf] = []
-        notFound.save()
-    }
-    this.p = cfg[conf]
+for (conf in cfg) {
+    const p = cfg[conf]
 
-    if(typeof this.p.enable != 'boolean') {
+    if (typeof p.enable != 'boolean') {
         throw new TypeError(`[${conf}] [Enable] Должно быть true или false`)
     }
 
-    if(!Number(this.p.speed)) {
+    if (!Number(p.speed)) {
         throw new TypeError(`[${conf}] [Speed] Должно быть числом!`)
     }
 
-    if(this.p.enable) require(`./sites/${conf}.js`)(this.p)
+    if (p.enable) require(`./sites/${conf}.js`)(p)
 }

@@ -2,7 +2,6 @@ const cheerio  = require("cheerio");
 const request  = require("request");
 const random   = require('../scripts/random');
 const download = require('../scripts/download');
-const notFound = require('../scripts/jsonArray');
 const CL       = require('../scripts/CL');
 const bad      = ["//st.prntscr.com/2021/02/09/0221/img/0_173a7b_211be8ff.png", "//st.prntscr.com/2021/02/09/0221/img/footer-logo.png", "https://i.imgur.com/removed.png"];
 
@@ -20,23 +19,17 @@ module.exports = (lightshot) => {
             }
         }
         const link = options.url
-        //if (!notFound.lightshot) notFound.lightshot = []
-        if (notFound.lightshot.includes(link)) return;
         request(options, (error, response, body) => {
-            const $ = cheerio.load(body);
+            const $ = cheerio.load(String(body));
             const img = $('img').attr('src');
 
             request({
                 url: img
             }, (err, res, bdy) => {
                 if (
-                    bad.includes(res ? res.request.href : undefined) ||
-                    bad.includes(img)
-                ) {
-                    notFound.lightshot.push(link)
-                    notFound.save()
-                    return CL("LightShot", "-", link)
-                }
+                    bad.includes(img) ||
+                    bad.includes(res ? res.request.href : undefined)
+                ) return CL("LightShot", "-", link)
 
                 CL("LightShot", "+", link)
 

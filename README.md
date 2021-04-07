@@ -1,18 +1,15 @@
 # Image Parser
 
-## ОБЯЗАТЕЛЬНО К ПРОЧТЕНИЮ!
-- https://app.prntscr.com/ru/privacy.html
-- https://imgur.com/privacy
-
 ## Как его использовать?
 Нужен [`NodeJS`](https://nodejs.org/ru/)!
 1. git clone https://github.com/Xaliks/Image-Parser/ или просто скачайте zip.
-2. Запускаем `start.bat`
-3. Все ^_^
+2. Запускаем `first start.bat`
+3. Запускаем `start.bat`
+4. Все ^_^
 
 ## Конфиг (config.json)
 1. Enable - Включено ли? (должно быть `true` или `false`)
-2. Speed - Скорость проверки ссылок в миллисекундах.)
+2. Speed - Скорость проверки ссылок в миллисекундах.
 3. Characters - Символы, которые будут использоваться в проверке.
 4. Files - Нужны ли файлы, которые отправляются в папку сервиса (должно быть `true` или `false`)
 

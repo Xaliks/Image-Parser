@@ -1,7 +1,6 @@
 const request  = require("request");
 const random   = require('../scripts/random');
 const download = require('../scripts/download');
-const notFound = require('../scripts/jsonArray');
 const CL       = require('../scripts/CL');
 const bad      = ["https://i.imgur.com/removed.png"];
 
@@ -21,17 +20,11 @@ module.exports = (imgur) => {
         const {
             url: link
         } = options
-        //if (!notFound.imgur) notFound.imgur = []
-        if (notFound.imgur.includes(link)) return;
         request(options, (error, response, body) => {
             if (
                 response.headers['content-type'] === "text/html" ||
                 bad.includes(response.request.href)
-            ) {
-                notFound.imgur.push(link)
-                notFound.save()
-                return CL("Imgur    ", "-", link)
-            }
+            ) return CL("Imgur    ", "-", link)
 
             CL("Imgur    ", "+", link)
 
