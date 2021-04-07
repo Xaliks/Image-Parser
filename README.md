@@ -3,7 +3,7 @@
 ## Как его использовать?
 Нужен [`NodeJS`](https://nodejs.org/ru/)!
 1. git clone https://github.com/Xaliks/Image-Parser/ или просто скачайте zip.
-2. Запускаем `first start.bat`
+2. Запускаем `first start.bat` (в первый раз)
 3. Запускаем `start.bat`
 4. Все ^_^
 

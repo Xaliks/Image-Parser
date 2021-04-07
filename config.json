@@ -6,7 +6,7 @@
         "files": true
     },
     "imgur": {
-        "enable": true,
+        "enable": false,
         "speed": 150,
         "characters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
         "files": true

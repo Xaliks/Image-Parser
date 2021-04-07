@@ -11,10 +11,8 @@ module.exports = function download(url, filename) {
     url = String(url)
     filename = String(filename)
     if (
-        filename.endsWith(".png") ||
-        url.endsWith(".png") ||
-        filename.endsWith(".jpg") ||
-        url.endsWith(".jpg")
+        filename.endsWith(".png") &&
+        url.endsWith(".png")
     ) {
         request.head(url, function() {
             request(url).pipe(fs.createWriteStream(filename));

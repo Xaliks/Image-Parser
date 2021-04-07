@@ -20,14 +20,23 @@ module.exports = (lightshot) => {
         }
         const link = options.url
         request(options, (error, response, body) => {
+            if(body === 'error code: 1006') {
+                CL("LightShot", "-", 'Ваш IP был забанен!')
+                process.exit()
+            }
+
             const $ = cheerio.load(String(body));
             const img = $('img').attr('src');
 
+            if (
+                !img ||
+                bad.includes(img) 
+            ) return CL("LightShot", "-", link)
+            
             request({
                 url: img
             }, (err, res, bdy) => {
                 if (
-                    bad.includes(img) ||
                     bad.includes(res ? res.request.href : undefined)
                 ) return CL("LightShot", "-", link)
 
