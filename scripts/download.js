@@ -1,4 +1,8 @@
-const fs = require('fs')
+const {
+    createWriteStream,
+    appendFileSync,
+    readFileSync
+} = require('fs')
 const request = require('request')
 
 /**
@@ -6,7 +10,7 @@ const request = require('request')
  * @param {String} filename Имя файла
  */
 module.exports = function download(url, filename) {
-    if (!url || !filename) return;
+    if (!url || !filename || readFileSync('./FoundLinks.txt', 'utf8').includes(url)) return;
     
     url = String(url)
     filename = String(filename)
@@ -15,7 +19,8 @@ module.exports = function download(url, filename) {
         url.endsWith(".png")
     ) {
         request.head(url, function() {
-            request(url).pipe(fs.createWriteStream(filename));
+            request(url).pipe(createWriteStream(filename));
+            appendFileSync('./FoundLinks.txt', `${url}\n`)
         });
     }
 };

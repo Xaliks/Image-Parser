@@ -15,6 +15,11 @@ ${"======================================================".brightCyan.bold}`)
 for (conf in cfg) {
     const p = cfg[conf]
 
+    for(ppp in p) {
+        const pppp = p[ppp]
+        if (!pppp || pppp === '') throw new TypeError(`[${conf}] [${ppp}] Не должен быть пустым!`)
+    }
+
     if (typeof p.enable != 'boolean') {
         throw new TypeError(`[${conf}] [Enable] Должно быть true или false`)
     }

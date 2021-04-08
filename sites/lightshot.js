@@ -3,7 +3,6 @@ const request  = require("request");
 const random   = require('../scripts/random');
 const download = require('../scripts/download');
 const CL       = require('../scripts/CL');
-const bad      = ["//st.prntscr.com/2021/02/09/0221/img/0_173a7b_211be8ff.png", "//st.prntscr.com/2021/02/09/0221/img/footer-logo.png", "https://i.imgur.com/removed.png"];
 
 module.exports = (lightshot) => {
     const {
@@ -30,14 +29,14 @@ module.exports = (lightshot) => {
 
             if (
                 !img ||
-                bad.includes(img) 
+                img.startsWith('//st.prntscr.com')
             ) return CL("LightShot", "-", link)
             
             request({
                 url: img
             }, (err, res, bdy) => {
                 if (
-                    bad.includes(res ? res.request.href : undefined)
+                    res.request.href === "https://i.imgur.com/removed.png"
                 ) return CL("LightShot", "-", link)
 
                 CL("LightShot", "+", link)

@@ -2,7 +2,6 @@ const request  = require("request");
 const random   = require('../scripts/random');
 const download = require('../scripts/download');
 const CL       = require('../scripts/CL');
-const bad      = ["https://i.imgur.com/removed.png"];
 
 module.exports = (imgur) => {
     const {
@@ -23,7 +22,7 @@ module.exports = (imgur) => {
         request(options, (error, response, body) => {
             if (
                 response.headers['content-type'] === "text/html" ||
-                bad.includes(response.request.href)
+                response.request.href === "https://i.imgur.com/removed.png"
             ) return CL("Imgur    ", "-", link)
 
             CL("Imgur    ", "+", link)
