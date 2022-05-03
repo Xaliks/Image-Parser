@@ -2,11 +2,13 @@
   "name": "image-parser",
   "version": "1.0.0",
   "description": "Парсер изображений",
-  "main": "parser.js",
+  "main": "index.js",
   "author": "Xaliks",
+  "scripts": {
+    "format": "prettier --write \"**/*.{js,json}\""
+  },
   "dependencies": {
     "cheerio": "^1.0.0-rc.5",
-    "colors": "^1.4.0",
-    "request": "^2.88.2"
+    "node-fetch": "^2.6.7"
   }
 }
