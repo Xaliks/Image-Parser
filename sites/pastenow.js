@@ -16,9 +16,7 @@ async function start(config) {
 		},
 	}).catch(() => null);
 	if (resp) {
-    const type = resp.headers.get("content-type");
-
-		if (resp.url !== "https://i.imgur.com/removed.png" && type.startsWith("image/")) {
+		if (resp.status === 200) {
 			await new Promise((resolve) => {
 				const fileStream = fs.createWriteStream(`./images/${config.name}/${resp.url.slice(config.baseUrl.length)}`);
 
@@ -32,7 +30,7 @@ async function start(config) {
 					resolve();
 				});
 			});
-		} else console.log(color.red(`[-] ${config.baseUrl}${rand}`));
+		} else console.log(color.red(`[-] ${resp.url}`));
 	} else console.log(color.yellow(`[?] ${config.baseUrl}${rand}`));
 
 	await sleep(config.speed);

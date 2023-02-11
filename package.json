@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.5",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.9"
   }
 }
